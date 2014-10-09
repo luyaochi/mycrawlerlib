@@ -29,11 +29,7 @@ class crawl:
 	#find seeds in the htmlCode,seed mean url
 	def seedsFinder(self, link_start, link_end, htmlCode):
 		#let one line shorter than 80 column
-
-		link_start = htmlCode[link_start:].find('href=\"') + link_start
-		link_start = len('href=\"') + link_start
-		
-		link_end = htmlCode[link_start:].find('\"') + link_start
+		link_start,link_end = self.calulateLinkPosition(link_start, link_end, htmlCode)
 		if ".css" not in htmlCode[link_start:link_end]:
 			print(self.filter_Url( htmlCode[link_start:link_end]))
 		return link_start,link_end
@@ -51,8 +47,13 @@ class crawl:
 			return self.path + '/' + Path_get
 
 	def show_current_URL(self):
-		pass
+		return self.path
 
+	def calulateLinkPosition(self, link_start, link_end, htmlCode):
+		link_start = htmlCode[link_start:].find('href=\"') + link_start
+		link_start = len('href=\"') + link_start
+		link_end = htmlCode[link_start:].find('\"') + link_start
+		return link_start,link_end
 
 class frontier:
 	def __init__(self,seed = None):
@@ -90,21 +91,31 @@ class frontier:
 	def load_frontierFromDb(self):
 		pass
 
-class db:
+class source:
 	def saveData():
 		pass
 
-	def LoadData():
+	def loadData():
 		pass
 
 class strategy:
 	def bfgs():
 		pass
 	def dfs():
-		pas
+		pass
 
 class crawler(crawl,frontier):
 	def __init__(self, seed):
 		frontier.__init__(self, seed)
-		crawl.__init__(self, self.del_frontier())
+		crawl.__init__(self, self.show_first_frontier())
 
+	def seedsFinder(self,link_start, link_end, htmlCode):
+		link_start,link_end = self.calulateLinkPosition(link_start, link_end, htmlCode)
+		if ".css" not in htmlCode[link_start:link_end]:
+			filterURL = self.filter_Url( htmlCode[link_start:link_end])
+			self.add_frontier(filterURL)
+		return link_start,link_end
+
+	def getURL(self):
+		crawl.getURL(self)
+		self.del_frontier()

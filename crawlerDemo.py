@@ -19,4 +19,6 @@ a.getURL()
 
 
 
-print('frontier List',a.show_frontier())
+print('show frontier List',a.show_frontier())
+print('show first frontier',a.show_first_frontier())
+print('len',a.len_frontier())

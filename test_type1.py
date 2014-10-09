@@ -74,22 +74,16 @@ class TestCrawl(unittest.TestCase):
 		Unit2 = 'http://123456'
 		self.assertEqual(Unit1,Unit2)
 
-	#def test_findUrl(self):
-	#	self.assertEqual(self.crawl.getHtmlCode(),self.crawl.htmlCode)
+	def test_show_current_URL(self):
+		Unit1 = self.crawl.show_current_URL()
+		Unit2 = self.crawl.path
+		self.assertEqual(Unit1,Unit2)
 
-	#def test_printpath(self):
-	#	saved_stdout = sys.stdout
-	#	try:
-	#		out = StringIO()
-	#		sys.stdout = out
-	#		self.crawl.printpath()
-	#		output = out.getvalue().strip()
-	#		assert output == 'http://www.nchu.edu.tw/\n["news.php?type=1&id=1","&page=0"\n{"pattern":"<font color="#999999">(.+?)</font>"}http://www.nchu.edu.tw/news.php?type=1&id=1&page=0"'
-	#	finally:
-	#		sys.stdout = saved_stdout
-
-
-
+	def test_calulateLinkPosition(self):
+		htmlCode = '<a href=\"https://www.google.com\">'
+		Unit1 = self.crawl.calulateLinkPosition(0, 0, htmlCode)
+		Unit2 = (htmlCode.find('href=\"')+len('href=\"'),htmlCode.find('\">'))
+		self.assertEqual(Unit1,Unit2)
 
 
 if __name__ == '__main__':
