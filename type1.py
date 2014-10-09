@@ -3,7 +3,7 @@
 
 import urllib
 
-class crawle:
+class crawl:
 #'''	only crawl one page, and not use regex to filter word '''
 
 	# init variable 
@@ -24,22 +24,23 @@ class crawle:
 			shortName = self.htmlCode_Decode[link_start:]
 			if 'href=\"' not in shortName and 'HREF=\"' not in shortName:
 				break
-			link_start,link_end = self.findUrl(link_start, link_end, htmlCode)
+			link_start,link_end = self.seedsFinder(link_start, link_end, htmlCode)
 
 	#find seeds in the htmlCode,seed mean url
 	def seedsFinder(self, link_start, link_end, htmlCode):
 		#let one line shorter than 80 column
-		link_start = len('href=\"') + link_start
-		link_start = htmlCode[link_start:].find('href=\"') + link_start
 
+		link_start = htmlCode[link_start:].find('href=\"') + link_start
+		link_start = len('href=\"') + link_start
+		
 		link_end = htmlCode[link_start:].find('\"') + link_start
 		if ".css" not in htmlCode[link_start:link_end]:
-			self.filter_Url( htmlCode[link_start:link_end] )
+			print(self.filter_Url( htmlCode[link_start:link_end]))
 		return link_start,link_end
 
 	#filter the URL do not have http or https
 	def filter_Url(self,Path_get):
-		if  "http" in  Path_get or "HTTP" in  Path_get :
+		if  ("http" in  Path_get) or ("HTTP" in  Path_get) :
 			return Path_get
 		elif "https" in Path_get or  "HTTPS" in Path_get:
 			return Path_get
@@ -48,6 +49,9 @@ class crawle:
 			if Pos == 0:
 				Path_get = Path_get[1:]
 			return self.path + '/' + Path_get
+
+	def show_current_URL(self):
+		pass
 
 
 class frontier:
@@ -79,9 +83,7 @@ class frontier:
 		return len(self.list_frontier)
 
 
-
-
-
+#not write
 	def save_frontierToDb(self):
 		pass
 	
@@ -95,9 +97,14 @@ class db:
 	def LoadData():
 		pass
 
+class strategy:
+	def bfgs():
+		pass
+	def dfs():
+		pas
 
-#a = crawler('http://www.nchu.edu.tw/index1.php')
-#print(a.path)
-#print(a.htmlCode_Decode)
-#print(a.htmlCode_Undecode)
-#a.getURL()
+class crawler(crawl,frontier):
+	def __init__(self, seed):
+		frontier.__init__(self, seed)
+		crawl.__init__(self, self.del_frontier())
+
