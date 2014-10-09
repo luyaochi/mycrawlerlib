@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*-coding:utf-8-*-
-
 import urllib
 
 class crawl:
@@ -54,68 +53,3 @@ class crawl:
 		link_start = len('href=\"') + link_start
 		link_end = htmlCode[link_start:].find('\"') + link_start
 		return link_start,link_end
-
-class frontier:
-	def __init__(self,seed = None):
-		self.list_frontier = []
-		self.init_frontier(seed)
- 
-	def init_frontier(self,seed):
-		if seed == None:
-			self.load_frontierFromDb()
-		else:
-			self.add_frontier(seed)
-		return self.list_frontier
-
-	def show_frontier(self):
-		return self.list_frontier
-
-	def add_frontier(self,seed):
-		if seed not in self.list_frontier:
-			self.list_frontier.append(seed)
-
-	def del_frontier(self):
-		return self.list_frontier.pop(0)
-
-	def show_first_frontier(self):
-		return self.list_frontier[0]
-
-	def len_frontier(self):
-		return len(self.list_frontier)
-
-
-#not write
-	def save_frontierToDb(self):
-		pass
-	
-	def load_frontierFromDb(self):
-		pass
-
-class source:
-	def saveData():
-		pass
-
-	def loadData():
-		pass
-
-class strategy:
-	def bfgs():
-		pass
-	def dfs():
-		pass
-
-class crawler(crawl,frontier):
-	def __init__(self, seed):
-		frontier.__init__(self, seed)
-		crawl.__init__(self, self.show_first_frontier())
-
-	def seedsFinder(self,link_start, link_end, htmlCode):
-		link_start,link_end = self.calulateLinkPosition(link_start, link_end, htmlCode)
-		if ".css" not in htmlCode[link_start:link_end]:
-			filterURL = self.filter_Url( htmlCode[link_start:link_end])
-			self.add_frontier(filterURL)
-		return link_start,link_end
-
-	def getURL(self):
-		crawl.getURL(self)
-		self.del_frontier()

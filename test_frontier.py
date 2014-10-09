@@ -2,9 +2,7 @@
 # -*-coding:utf-8-*-
 
 import unittest
-import urllib
-
-from type1 import frontier
+from frontier import frontier
 
 path = 'http://www.nchu.edu.tw/index1.php'
 #test frontier

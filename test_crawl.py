@@ -3,8 +3,7 @@
 
 import unittest
 import urllib
-
-from type1 import crawl
+from crawl import crawl
 
 path = 'http://www.nchu.edu.tw/index1.php'
 

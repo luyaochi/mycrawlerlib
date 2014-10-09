@@ -1,0 +1,1 @@
+python test_frontier.py && python test_crawl.py && python test_crawler.py
